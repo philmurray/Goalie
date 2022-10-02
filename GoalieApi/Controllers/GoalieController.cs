@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GoalieApi.DataAccess;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -7,8 +8,17 @@ using System.Web.Http;
 
 namespace GoalieApi.Controllers
 {
-    public class ValuesController : ApiController
+    public class GoalieController : ApiController
     {
+        private IGoalieRepository goalieRepository;
+
+
+        public GoalieController(IGoalieRepository repository)
+        {
+            this.goalieRepository = repository;
+        }
+
+
         // GET api/values
         public IEnumerable<string> Get()
         {
