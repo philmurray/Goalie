@@ -19,9 +19,13 @@ namespace GoalieApi.DataAccess
         {
             modelBuilder.Entity<Goal>()
                 .HasRequired(g => g.User);
+
+            modelBuilder.Entity<Goal>()
+                .HasMany(g => g.GoalProgress);
         }
 
-        public DbSet<User> Users { get; set; }
-        public DbSet<Goal> Goals { get; set; }
+        public virtual DbSet<User> User { get; set; }
+        public virtual DbSet<Goal> Goal { get; set; }
+        public virtual DbSet<GoalProgress> GoalProgress {get;set; }
     }
 }

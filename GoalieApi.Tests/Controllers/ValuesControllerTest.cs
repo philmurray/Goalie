@@ -17,7 +17,7 @@ namespace GoalieApi.Tests.Controllers
         public void Get()
         {
             // Arrange
-            GoalieController controller = new GoalieController();
+            GoalController controller = new GoalController();
 
             // Act
             IEnumerable<string> result = controller.Get();
@@ -33,7 +33,7 @@ namespace GoalieApi.Tests.Controllers
         public void GetById()
         {
             // Arrange
-            GoalieController controller = new GoalieController();
+            GoalController controller = new GoalController();
 
             // Act
             string result = controller.Get(5);
@@ -46,7 +46,7 @@ namespace GoalieApi.Tests.Controllers
         public void Post()
         {
             // Arrange
-            GoalieController controller = new GoalieController();
+            GoalController controller = new GoalController();
 
             // Act
             controller.Post("value");
@@ -58,7 +58,7 @@ namespace GoalieApi.Tests.Controllers
         public void Put()
         {
             // Arrange
-            GoalieController controller = new GoalieController();
+            GoalController controller = new GoalController();
 
             // Act
             controller.Put(5, "value");
@@ -70,7 +70,7 @@ namespace GoalieApi.Tests.Controllers
         public void Delete()
         {
             // Arrange
-            GoalieController controller = new GoalieController();
+            GoalController controller = new GoalController();
 
             // Act
             controller.Delete(5);

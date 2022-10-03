@@ -10,11 +10,14 @@ namespace GoalieModels
     {
         public int GoalId { get; set; }
 
-        public DateTime Created { get; set; }
         public string Title { get; set; }
         public string Details { get; set; }
         public bool Completed { get; set; }
 
-        public User User { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public DateTime? CompletedDate { get; set; }
+
+        public virtual User User { get; set; }
+        public virtual ICollection<GoalProgress> GoalProgress { get; set; }
     }
 }
