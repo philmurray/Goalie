@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GoalieWeb.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,6 +9,13 @@ namespace GoalieWeb.Controllers
 {
     public class HomeController : Controller
     {
+        private IGoalieApiService _service;
+
+        public HomeController(IGoalieApiService goalieService)
+        {
+            _service = goalieService;
+        }
+
         public ActionResult Index()
         {
             return View();

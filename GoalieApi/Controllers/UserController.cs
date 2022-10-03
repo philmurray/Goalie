@@ -1,4 +1,5 @@
 ﻿using GoalieApi.DataAccess;
+using GoalieModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,20 @@ namespace GoalieApi.Controllers
             this.goalieRepository = repository;
         }
 
+        public bool ValidateUser(string userName, string password)
+        {
+            return this.goalieRepository.ValidateUser(userName, password);
+        }
+
+        public User GetUser(string username)
+        {
+            return this.goalieRepository.GetUser(username);
+        }
+
+        public string GetUserNameByEmail(string email)
+        {
+            return this.goalieRepository.GetUserNameByEmail(email);
+        }
 
     }
 }
