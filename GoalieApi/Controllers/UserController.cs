@@ -18,6 +18,7 @@ namespace GoalieApi.Controllers
             this.goalieRepository = repository;
         }
 
+        [HttpGet]
         public bool ValidateUser(string userName, string password)
         {
             return this.goalieRepository.ValidateUser(userName, password);

@@ -1,4 +1,5 @@
-﻿using GoalieWeb.Services;
+﻿using GoalieWeb.CustomAuthentication;
+using GoalieWeb.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Web.Mvc;
 
 namespace GoalieWeb.Controllers
 {
+    [CustomAuthorize]
     public class HomeController : Controller
     {
         private IGoalieApiService _service;

@@ -1,4 +1,5 @@
 ﻿using GoalieModels;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -19,6 +20,8 @@ namespace GoalieWeb.Services
 
     public class GoalieApiService : IGoalieApiService
     {
+        protected static readonly ILog _log = LogManager.GetLogger(typeof(GoalieApiService));
+
         private static HttpClient _httpClient;
         private static HttpClient HttpClient {
             get
@@ -35,22 +38,128 @@ namespace GoalieWeb.Services
 
         public IList<Goal> GetGoalsByUserId(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var responseTask = HttpClient.GetAsync($"Goal/GetByUserId?id={id}");
+                responseTask.Wait();
+
+                //To store result of web api response.   
+                var result = responseTask.Result;
+
+                //If success received   
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<List<Goal>>();
+                    readTask.Wait();
+
+                    return readTask.Result;
+                }
+                else
+                {
+                    throw new Exception($"Got status code {result.StatusCode} from call to GetGoalsByUserId.  {result.ReasonPhrase}");
+                }
+            }
+            catch (Exception e)
+            {
+                _log.Error(e);
+                throw new Exception("Call to api failed");
+            }
         }
 
         public User GetUser(string username)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var responseTask = HttpClient.GetAsync($"User/GetUser?username={username}");
+                responseTask.Wait();
+
+                //To store result of web api response.   
+                var result = responseTask.Result;
+
+                //If success received   
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<User>();
+                    readTask.Wait();
+
+                    return readTask.Result;
+                }
+                else
+                {
+                    throw new Exception($"Got status code {result.StatusCode} from call to GetUser.  {result.ReasonPhrase}");
+                }
+            }
+            catch (Exception e)
+            {
+                _log.Error(e);
+                throw new Exception("Call to api failed");
+            }
         }
 
         public string GetUserNameByEmail(string email)
         {
-            throw new NotImplementedException();
+            string userName = "";
+
+            try
+            {
+                var responseTask = HttpClient.GetAsync($"User/GetUserNameByEmail?email={email}");
+                responseTask.Wait();
+
+                //To store result of web api response.   
+                var result = responseTask.Result;
+
+                //If success received   
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsStringAsync();
+                    readTask.Wait();
+
+                    userName = readTask.Result;
+                }
+                else
+                {
+                    throw new Exception($"Got status code {result.StatusCode} from call to GetUserNameByEmail.  {result.ReasonPhrase}");
+                }
+            }
+            catch (Exception e)
+            {
+                _log.Error(e);
+                throw new Exception("Call to api failed");
+            }
+            return userName;
         }
 
         public bool ValidateUser(string userName, string password)
         {
-            throw new NotImplementedException();
+            bool validated = false;
+
+            try
+            {
+                var responseTask = HttpClient.GetAsync($"User/ValidateUser?userName={userName}&password={password}");
+                responseTask.Wait();
+
+                //To store result of web api response.   
+                var result = responseTask.Result;
+
+                //If success received   
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsStringAsync();
+                    readTask.Wait();
+
+                    validated = bool.Parse(readTask.Result);
+                }
+                else
+                {
+                    throw new Exception($"Got status code {result.StatusCode} from call to ValidateUser.  {result.ReasonPhrase}");
+                }
+            }
+            catch (Exception e)
+            {
+                _log.Error(e);
+                throw new Exception("Call to api failed");
+            }
+            return validated;
         }
     }
 }
