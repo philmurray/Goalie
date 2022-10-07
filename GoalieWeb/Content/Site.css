@@ -22,3 +22,19 @@ select,
 textarea {
     max-width: 280px;
 }
+
+#goalsTable tr td:first-child {
+    width: 100%;
+}
+
+tbody tr.hide-table-padding td {
+    padding: 0;
+}
+
+.goal-title {
+    font-size: 24px;
+}
+
+.goal-details {
+    padding: 20px;
+}

@@ -1,4 +1,5 @@
 ﻿using GoalieWeb.CustomAuthentication;
+using GoalieWeb.Models;
 using GoalieWeb.Services;
 using System;
 using System.Collections.Generic;
@@ -20,21 +21,14 @@ namespace GoalieWeb.Controllers
 
         public ActionResult Index()
         {
-            return View();
-        }
+            CustomPrincipal user = (CustomPrincipal)User;
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
+            HomeView model = new HomeView
+            {
+                Goals = _service.GetGoalsByUserId(user.UserId)
+            };
 
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            return View(model);
         }
     }
 }
