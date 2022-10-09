@@ -16,6 +16,8 @@ namespace GoalieWeb.Services
         string GetUserNameByEmail(string email);
 
         IList<Goal> GetGoalsByUserId(int id);
+        Goal GetGoal(int goalId);
+        void UpdateGoal(Goal goal);
     }
 
     public class GoalieApiService : IGoalieApiService
@@ -57,6 +59,58 @@ namespace GoalieWeb.Services
                 else
                 {
                     throw new Exception($"Got status code {result.StatusCode} from call to GetGoalsByUserId.  {result.ReasonPhrase}");
+                }
+            }
+            catch (Exception e)
+            {
+                _log.Error(e);
+                throw new Exception("Call to api failed");
+            }
+        }
+        public Goal GetGoal(int goalId)
+        {
+            try
+            {
+                var responseTask = HttpClient.GetAsync($"Goal/GetByGoalId?id={goalId}");
+                responseTask.Wait();
+
+                //To store result of web api response.   
+                var result = responseTask.Result;
+
+                //If success received   
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<Goal>();
+                    readTask.Wait();
+
+                    return readTask.Result;
+                }
+                else
+                {
+                    throw new Exception($"Got status code {result.StatusCode} from call to GetByGoalId.  {result.ReasonPhrase}");
+                }
+            }
+            catch (Exception e)
+            {
+                _log.Error(e);
+                throw new Exception("Call to api failed");
+            }
+        }
+
+        public void UpdateGoal(Goal goal)
+        {
+            try
+            {
+                var responseTask = HttpClient.PostAsJsonAsync<Goal>("Goal/Update", goal);
+                responseTask.Wait();
+
+                //To store result of web api response.   
+                var result = responseTask.Result;
+
+                //If success received   
+                if (!result.IsSuccessStatusCode)
+                {
+                    throw new Exception($"Got status code {result.StatusCode} from call to Update.  {result.ReasonPhrase}");
                 }
             }
             catch (Exception e)

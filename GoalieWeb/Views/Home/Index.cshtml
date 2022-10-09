@@ -9,24 +9,46 @@
     @Scripts.Render("~/bundles/home")
 }
 
+
+<button type="button" class="btn btn-success add-goal" data-view-url="@Url.Action("AddGoal")">Add Goal</button>
+<hr />
 <table id="goalsTable" class="table table-hover">
     <tbody>
         @foreach (var goal in Model.Goals)
         {
             <tr data-toggle="collapse" href="@($"#collapse{goal.GoalId}")" data-goal-id="@goal.GoalId">
                 <td class="goal-title">@goal.Title</td>
-                <td><button type="button" class="btn btn-primary edit-goal">Edit</button></td>
-                <td><button type="button" class="btn btn-info view-progress">View Progress</button></td>
-                <td><button type="button" class="btn btn-success complete-goal">Complete</button></td>
+                <td><button type="button" class="btn btn-primary edit-goal" data-view-url="@Url.Action("EditGoal", new { goalId = goal.GoalId })">Edit</button></td>
+                <td><button type="button" class="btn btn-success complete-goal" data-view-url="@Url.Action("CompleteGoal", new { goalId = goal.GoalId })">Complete</button></td>
             </tr>
             <tr class="hide-table-padding">
                 <td colspan="4">
-                    <div id="@($"collapse{goal.GoalId}")" class="collapse goal-details">
-                        @goal.Details
-                    </div>
+                    @if (!string.IsNullOrEmpty(goal.Details))
+                    {
+                        <div id="@($"collapse{goal.GoalId}")" class="collapse goal-details">
+                            @goal.Details
+                        </div>
+                    }
                 </td>
             </tr>
         }
     </tbody>
 </table>
 
+
+<div id="goalModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Modal title</h3>
+            </div>
+            <div class="modal-body">
+                <p>Modal body text goes here.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary save-changes">Confirm</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

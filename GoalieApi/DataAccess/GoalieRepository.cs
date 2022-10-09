@@ -12,6 +12,8 @@ namespace GoalieApi.DataAccess
         User GetUser(string username);
         string GetUserNameByEmail(string email);
         IList<Goal> GetGoals(int userId, bool includeCompleted = false);
+        Goal GetGoal(int goalId);
+        void UpdateGoal(Goal goal);
     }
 
     public class GoalieRepository : IGoalieRepository
@@ -59,6 +61,33 @@ namespace GoalieApi.DataAccess
                         select g;
 
             return goals.ToList();
+        }
+
+        public Goal GetGoal(int goalId)
+        {
+            var goal = from g in db.Goal where g.GoalId == goalId select g;
+            return goal.FirstOrDefault();
+        }
+
+        public void UpdateGoal(Goal goal)
+        {
+            var existingGoal = GetGoal(goal.GoalId);
+            if (existingGoal == null)
+            {
+                goal.CreatedDate = DateTime.Now;
+                db.Goal.Add(goal);
+            }
+            else
+            {
+                if (goal.Completed && !existingGoal.Completed)
+                {
+                    existingGoal.CompletedDate = DateTime.Now;
+                }
+                existingGoal.Details = goal.Details;
+                existingGoal.Title = goal.Title;
+                existingGoal.Completed = goal.Completed;
+            }
+            db.SaveChanges();
         }
     }
 }

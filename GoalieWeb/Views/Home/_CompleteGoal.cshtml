@@ -1,0 +1,14 @@
+﻿@model GoalieWeb.Models.GoalView
+
+@using (Html.BeginForm("AddOrUpdateGoal", "Home", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.GoalId)
+    @Html.HiddenFor(m => m.Completed)
+    @Html.HiddenFor(m => m.Title)
+    @Html.HiddenFor(m => m.Details)
+
+    <p>
+        Are you sure you want to complete this goal?
+    </p>
+}

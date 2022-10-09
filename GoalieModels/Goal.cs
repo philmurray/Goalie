@@ -9,6 +9,7 @@ namespace GoalieModels
     public class Goal
     {
         public int GoalId { get; set; }
+        public int UserId { get; set; }
 
         public string Title { get; set; }
         public string Details { get; set; }

@@ -23,5 +23,14 @@ namespace GoalieApi.Controllers
         {
             return this.goalieRepository.GetGoals(id);
         }
+        public Goal GetByGoalId(int id)
+        {
+            return this.goalieRepository.GetGoal(id);
+        }
+        [HttpPost]
+        public void Update(Goal goal)
+        {
+            this.goalieRepository.UpdateGoal(goal);
+        }
     }
 }
