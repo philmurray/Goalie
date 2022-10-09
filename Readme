@@ -1,0 +1,7 @@
+This is a simple .net framework mvc app.  It's pretty much your standard TODO application, with 'goals' that the user can create, manage and complete.  It is a full stack using separate web and api layers, with code-first entity framework for all the sql access.  It is by no means a production ready application, but more of an exercise to re-familiarize myself with how to code :)
+
+Notes:
+ - Currently there is no way to manage or create users.  The entity framework 'seed' data creates a user named 'pmurray' with a password of 'password'.  
+ - Passwords are stored in plain text in the database.  I understand this is a BIG no-no, but demonstrating that I can encrypt passwords wasn't really part of my exercise here :P
+ - There is currently very poor logging and error handling.  In general I would do this as it is super important for a production app, but just kind of ran out of time to put in in there
+ - Ditto for unit testing ;)
